@@ -1,5 +1,9 @@
 .App {
+  padding-top: 10vh;
   text-align: center;
+  font-family: "poynter-oldstyle-display",serif;
+  background-color: wheat;
+  padding-bottom: 10vh;
 }
 
 .App-logo {
@@ -14,8 +18,8 @@
 }
 
 .App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+  background-color: #c2a567;
+  min-height: 60vh;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -27,8 +31,11 @@
 .App-link {
   color: #61dafb;
 }
+.table {
+  background: white;
+}
 
-@keyframes App-logo-spin {
+/*@keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
   }
@@ -36,3 +43,4 @@
     transform: rotate(360deg);
   }
 }
+*/
