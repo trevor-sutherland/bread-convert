@@ -6,7 +6,7 @@ class BreadSelect extends Component {
 
   renderItems() {
     return this.props.bread.map((item) => (
-      <option key={item.id} value={item.title}>
+      <option key={item.title} value={item.title}>
       {item.title}
       </option>  
       ));
@@ -15,8 +15,8 @@ class BreadSelect extends Component {
   render() {
       return (
       <React.Fragment>
-      {this.renderItems()}
-      </React.Fragment>
+        {this.renderItems()}
+      </React.Fragment>  
       );
   }
 }

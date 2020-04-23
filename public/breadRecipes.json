@@ -1,8 +1,135 @@
 [
     {
-        "title": "Sour Dough",
-        "salt": 5,
-        "water": 50,
-        "leaven": 30
+        "author": "Ken Forkish's Flour Salt Water Yeast",
+        "title": "Overnight 40% Wheat Bread",
+        "type": "Yeasted",
+        "ingredients": {
+            "whiteFlour": 60,
+            "wholeWheatFlour": 40,
+            "water": 80,
+            "yeast": 0.30,
+            "salt": 2.20
+        },
+        "preperation": {
+            "autolyse": {
+                "time": 20, 
+                "temperature": 74
+            },
+            "bulkFermentation": {
+                "time": 5, 
+                "temperature": 74
+            },
+            "proof": {
+                "time": 12, 
+                "temperature": 45
+            },
+            "bake": {
+                "time": 60, 
+                "temperature": 475
+            },
+            "total": 18
+        }   
+    },
+    {
+        "author": "Tartine Bread",
+        "title": "Country Loaf",
+        "type": "Sourdough",
+        "ingredients": {
+            "whiteFlour": 90,
+            "wholeWheatFlour": 10,
+            "water": 80,
+            "leaven": 20,
+            "salt": 2
+        },
+        "preperation": {
+            "autolyse": {
+                "time": 20, 
+                "temperature": 74
+            },
+            "bulkFermentation": {
+                "time": 5, 
+                "temperature": 74
+            },
+            "proof": {
+                "time": 90, 
+                "temperature": 74
+            },
+            "bake": {
+                "time": 60, 
+                "temperature": 475
+            },
+            "total": 8
+        }   
+    },
+    {
+        "author": "Memoirs of a Baker's Instagram",
+        "title": "Focaccia",
+        "type": "Sourdough",
+        "ingredients": {
+            "whiteFlour": 100,
+            "wholeWheatFlour": 0,
+            "water": 80,
+            "leaven": 30,
+            "salt": 2.5
+        },
+        "preperation": {
+            "autolyse": {
+                "time": 30, 
+                "temperature": 74
+            },
+            "bulkFermentation": {
+                "time": 5, 
+                "temperature": 74
+            },
+            "proof": {
+                "time": "", 
+                "temperature": ""
+            },
+            "bake": {
+                "time": 22, 
+                "temperature": 450
+            },
+            "total": 6
+        }   
+    },
+    {
+        "author": "Joshua Weissman",
+        "title": "Milk Bread",
+        "type": "Yeasted",
+        "ingredients": {
+            "tangzhong": {
+                "bread-flour": 5, 
+                "water": 8, 
+                "milk": 16
+            },
+            "whiteFlour": 100,
+            "wholeWheatFlour": 0,
+            "water": 0,
+            "yeast": 2.8,
+            "salt": 1,
+            "milk": 37.5,
+            "eggs": 0.00285714,
+            "butter": 12,
+            "sugar": 17.5
+        },
+        "preperation": {
+            "autolyse": {
+                "time": "", 
+                "temperature": ""
+            },
+            "bulkFermentation": {
+                "time": 1, 
+                "temperature": 74
+            },
+            "proof": {
+                "time": 1, 
+                "temperature": 74
+            },
+            "bake": {
+                "time": 30, 
+                "temperature": 350
+            },
+            "total": 2.5
+        }   
     }
 ]
