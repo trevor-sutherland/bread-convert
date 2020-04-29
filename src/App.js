@@ -3,8 +3,8 @@ import logo from './logo.svg';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from 'axios';
+import Bread from './Control/Bread';
 import BreadSelect from './Control/BreadSelect';
-import BreadRecipe from './Control/BreadIngredients';
 import Flour from './Control/Flour';
 import Breadingredients from './Control/BreadIngredients';
 import BreadPreperation from './Control/BreadPreperation';
@@ -56,7 +56,7 @@ class App extends Component {
  componentDidMount() { 
         
     //Get current Bread Data
-    axios.get('http://localhost:3000/breadRecipes.json')
+    axios.get('/breadRecipes.json')
     .then((response) => {
           this.setState({
           bread: response.data
@@ -93,6 +93,7 @@ class App extends Component {
             <div className="col">
                 <Breadingredients ingredients={this.state.ingredients} recipe={this.state.recipe} flour={this.state.flour} />
             </div>
+                <Bread ingredients={this.state.ingredients} recipe={this.state.recipe} flour={this.state.flour} />
           </div>
           <div className="row">  
             <div className="col">

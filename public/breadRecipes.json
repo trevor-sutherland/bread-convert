@@ -1,7 +1,7 @@
 [
     {
         "author": "Ken Forkish's Flour Salt Water Yeast",
-        "title": "Overnight 40% Wheat Bread",
+        "title": "Overnight 40% Wheat Bread (Yeasted)",
         "type": "Yeasted",
         "ingredients": {
             "whiteFlour": 60,
@@ -32,7 +32,7 @@
     },
     {
         "author": "Tartine Bread",
-        "title": "Country Loaf",
+        "title": "Country Loaf (Sourdough)",
         "type": "Sourdough",
         "ingredients": {
             "whiteFlour": 90,
@@ -63,7 +63,7 @@
     },
     {
         "author": "Memoirs of a Baker's Instagram",
-        "title": "Focaccia",
+        "title": "Focaccia (Sourdough)",
         "type": "Sourdough",
         "ingredients": {
             "whiteFlour": 100,
@@ -94,7 +94,7 @@
     },
     {
         "author": "Joshua Weissman",
-        "title": "Milk Bread",
+        "title": "Milk Bread (Yeasted)",
         "type": "Yeasted",
         "ingredients": {
             "tangzhong": {

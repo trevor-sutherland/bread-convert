@@ -12,7 +12,8 @@ class Flour extends Component {
                     id="flour"
                     name="flour"
                     step="50"
-                    placeholder="currently 500"
+                    min="100"
+                    placeholder="500"
                     value={this.props.flour} 
                     onChange={this.props.changeFlour}
                   />

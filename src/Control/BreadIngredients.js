@@ -13,10 +13,7 @@ class Breadingredients extends Component {
         
 		return(
             <div className="list-group">
-                <h3>
-                    {this.props.recipe.title}
-                    <small className="text-muted"><br />{this.props.recipe.type}</small>
-                </h3>
+                <h3>{this.props.recipe.title}</h3>
                 <ul className="list-group list-group-flush">
                     <li className="list-group-item"><b>White Flour:</b> {Math.round((this.props.recipe.ingredients.whiteFlour /100 * this.props.flour) * 100 / 100)}</li>
                     <li className="list-group-item"><b>Whole Wheat Flour</b> {Math.round((this.props.recipe.ingredients.wholeWheatFlour /100 * this.props.flour) * 100 / 100)}</li>
