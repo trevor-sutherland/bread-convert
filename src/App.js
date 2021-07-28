@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
-import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from 'axios';
 import Bread from './Control/Bread';
 import BreadSelect from './Control/BreadSelect';
@@ -15,11 +14,13 @@ class App extends Component {
         this.state = {
           flour: [500],
           bread: [],
-          recipe: []
+          recipe: [],
+          breadLogo: []
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleBreadState = this.handleBreadState.bind(this);
     this.changeFlour = this.changeFlour.bind(this);
+    this.getLogo = this.getLogo.bind(this);
 }; 
 
   handleChange (e) {
@@ -31,8 +32,22 @@ class App extends Component {
       this.handleBreadState
       );
       
-  };   
+  };
 
+  getLogo () {
+  axios.get('https://api.unsplash.com/photos/random', {
+    params: {
+    client_id: 'Tu4EqFZ28zGqh07es4ssr7Lpczsn7sEpcmgxJqESliQ',
+    query: 'bread'
+    }
+  })
+  .then((response) => {
+    this.setState({
+      breadLogo: response.data.urls.full
+    })
+    console.log(response.data.urls.full);
+  })
+  }
   //Create single bread object to pass down.
 
   handleBreadState = () => {
@@ -64,7 +79,7 @@ class App extends Component {
       })
         
     .catch((error) =>console.log(error));
-    
+    this.getLogo();
   }
 
   render()  {
@@ -72,10 +87,10 @@ class App extends Component {
 
     return (
       <div className="App">
-        {/* <header className="App-header">
+        <header className="App-header">
           <h1>For Bread Baking</h1>
-          <img src={logo} className="App-logo" alt="logo" />
-        </header> */}
+          <img src={this.state.breadLogo} className="App-logo" alt="logo" />
+        </header>
         <div className="container">
           <div className="row">
             <div className="col">
