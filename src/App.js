@@ -71,7 +71,7 @@ class App extends Component {
  componentDidMount() { 
         
     //Get current Bread Data
-    axios.get('/breadRecipes.json')
+    axios.get('https://trevor-sutherland.github.io/bread-convert/public/breadRecipes.json')
     .then((response) => {
           this.setState({
           bread: response.data
