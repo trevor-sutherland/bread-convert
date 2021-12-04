@@ -1964,7 +1964,7 @@ var App = /*#__PURE__*/function (_Component) {
       var _this3 = this;
 
       //Get current Bread Data
-      axios__WEBPACK_IMPORTED_MODULE_3___default().get('/breadRecipes.json').then(function (response) {
+      axios__WEBPACK_IMPORTED_MODULE_3___default().get('https://trevor-sutherland.github.io/bread-convert/public/breadRecipes.json').then(function (response) {
         _this3.setState({
           bread: response.data
         });
