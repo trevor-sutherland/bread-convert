@@ -1964,7 +1964,9 @@ var App = /*#__PURE__*/function (_Component) {
       var _this3 = this;
 
       //Get current Bread Data
-      axios__WEBPACK_IMPORTED_MODULE_3___default().get('https://trevor-sutherland.github.io/bread-convert/public/breadRecipes.json').then(function (response) {
+      // Load from a relative path so local builds and GitHub Pages both use
+      // the recipe JSON shipped with this app (with correct time units).
+      axios__WEBPACK_IMPORTED_MODULE_3___default().get('breadRecipes.json').then(function (response) {
         _this3.setState({
           bread: response.data
         });
@@ -2279,6 +2281,45 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 
 
 
+var STEPS = ['autolyse', 'bulkFermentation', 'proof', 'bake'];
+var STEP_LABELS = {
+  autolyse: 'Autolyse',
+  bulkFermentation: 'Bulk Fermentation',
+  proof: 'Proof',
+  bake: 'Bake'
+};
+
+function hasTime(value) {
+  return value !== '' && value !== null && value !== undefined && !Number.isNaN(Number(value));
+}
+
+function formatStepTime(step) {
+  if (!step || !hasTime(step.time)) return '—';
+  var unit = step.unit || 'hours';
+  return "".concat(step.time, " ").concat(unit);
+}
+
+function formatTemperature(step) {
+  if (!step || step.temperature === '' || step.temperature === null || step.temperature === undefined) {
+    return '—';
+  }
+
+  return "".concat(step.temperature, " F");
+}
+/** Convert a preparation step time to hours for totaling. */
+
+
+function stepTimeInHours(step) {
+  if (!step || !hasTime(step.time)) return 0;
+  var time = Number(step.time);
+  var unit = step.unit || 'hours';
+  return unit === 'minutes' ? time / 60 : time;
+}
+
+function formatTotalHours(hours) {
+  var rounded = Math.round(hours * 10) / 10;
+  return Number.isInteger(rounded) ? "".concat(rounded, " hours") : "".concat(rounded, " hours");
+}
 
 var BreadPreperation = /*#__PURE__*/function (_Component) {
   _inherits(BreadPreperation, _Component);
@@ -2308,6 +2349,10 @@ var BreadPreperation = /*#__PURE__*/function (_Component) {
         return;
       }
 
+      var prep = this.props.recipe.preperation;
+      var totalHours = STEPS.reduce(function (sum, key) {
+        return sum + stepTimeInHours(prep[key]);
+      }, 0);
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
         className: "list-group"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("table", {
@@ -2320,17 +2365,17 @@ var BreadPreperation = /*#__PURE__*/function (_Component) {
         scope: "col"
       }, "Time"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("th", {
         scope: "col"
-      }, "Temperature"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("tbody", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("th", {
+      }, "Temperature"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("tbody", null, STEPS.map(function (key) {
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("tr", {
+          key: key
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("th", {
+          scope: "row"
+        }, STEP_LABELS[key]), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("td", null, formatStepTime(prep[key])), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("td", null, formatTemperature(prep[key])));
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("th", {
         scope: "row"
-      }, "Autolyse"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("td", null, this.props.recipe.preperation.autolyse.time, " minutes"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("td", null, this.props.recipe.preperation.autolyse.temperature, " F")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("th", {
-        scope: "row"
-      }, "Bulk Fermentation"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("td", null, this.props.recipe.preperation.bulkFermentation.time, " hours"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("td", null, this.props.recipe.preperation.bulkFermentation.temperature, " F")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("th", {
-        scope: "row"
-      }, "Proof"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("td", null, this.props.recipe.preperation.proof.time, " hours"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("td", null, this.props.recipe.preperation.proof.temperature, " F")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("th", {
-        scope: "row"
-      }, "Bake"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("td", null, this.props.recipe.preperation.bake.time, " minutes"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("td", null, this.props.recipe.preperation.bake.temperature, " F")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("th", {
-        scope: "row"
-      }, "Total"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("td", null, this.props.recipe.preperation.total, " hours"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("td", null, "---")))));
+      }, "Total"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("td", null, formatTotalHours(totalHours), " ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("small", {
+        className: "text-muted"
+      }, "(sum of steps above)")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("td", null, "\u2014")))));
     }
   }]);
 
@@ -2737,7 +2782,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_cssWithMappingToString_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".App {\r\n  padding-top: 10vh;\r\n  text-align: center;\r\n  font-family: \"poynter-oldstyle-display\",serif;\r\n  background-color: wheat;\r\n  padding-bottom: 10vh;\r\n}\r\n\r\n.App-logo {\r\n  height: 40vmin;\r\n  pointer-events: none;\r\n}\r\n\r\n@media (prefers-reduced-motion: no-preference) {\r\n  .App-logo {\r\n    animation: App-logo-spin infinite 20s linear;\r\n  }\r\n}\r\n\r\n.App-header {\r\n  background-color: #a89773;\r\n  min-height: 60vh;\r\n  display: flex;\r\n  flex-direction: column;\r\n  align-items: center;\r\n  justify-content: center;\r\n  font-size: calc(10px + 2vmin);\r\n  color: white;\r\n}\r\n\r\n.App-link {\r\n  color: #61dafb;\r\n}\r\n.table {\r\n  background: white;\r\n}\r\n\r\n/*@keyframes App-logo-spin {\r\n  from {\r\n    transform: rotate(0deg);\r\n  }\r\n  to {\r\n    transform: rotate(360deg);\r\n  }\r\n}\r\n*/", "",{"version":3,"sources":["webpack://./src/App.css"],"names":[],"mappings":"AAAA;EACE,iBAAiB;EACjB,kBAAkB;EAClB,6CAA6C;EAC7C,uBAAuB;EACvB,oBAAoB;AACtB;;AAEA;EACE,cAAc;EACd,oBAAoB;AACtB;;AAEA;EACE;IACE,4CAA4C;EAC9C;AACF;;AAEA;EACE,yBAAyB;EACzB,gBAAgB;EAChB,aAAa;EACb,sBAAsB;EACtB,mBAAmB;EACnB,uBAAuB;EACvB,6BAA6B;EAC7B,YAAY;AACd;;AAEA;EACE,cAAc;AAChB;AACA;EACE,iBAAiB;AACnB;;AAEA;;;;;;;;CAQC","sourcesContent":[".App {\r\n  padding-top: 10vh;\r\n  text-align: center;\r\n  font-family: \"poynter-oldstyle-display\",serif;\r\n  background-color: wheat;\r\n  padding-bottom: 10vh;\r\n}\r\n\r\n.App-logo {\r\n  height: 40vmin;\r\n  pointer-events: none;\r\n}\r\n\r\n@media (prefers-reduced-motion: no-preference) {\r\n  .App-logo {\r\n    animation: App-logo-spin infinite 20s linear;\r\n  }\r\n}\r\n\r\n.App-header {\r\n  background-color: #a89773;\r\n  min-height: 60vh;\r\n  display: flex;\r\n  flex-direction: column;\r\n  align-items: center;\r\n  justify-content: center;\r\n  font-size: calc(10px + 2vmin);\r\n  color: white;\r\n}\r\n\r\n.App-link {\r\n  color: #61dafb;\r\n}\r\n.table {\r\n  background: white;\r\n}\r\n\r\n/*@keyframes App-logo-spin {\r\n  from {\r\n    transform: rotate(0deg);\r\n  }\r\n  to {\r\n    transform: rotate(360deg);\r\n  }\r\n}\r\n*/"],"sourceRoot":""}]);
+___CSS_LOADER_EXPORT___.push([module.id, ".App {\n  padding-top: 10vh;\n  text-align: center;\n  font-family: \"poynter-oldstyle-display\",serif;\n  background-color: wheat;\n  padding-bottom: 10vh;\n}\n\n.App-logo {\n  height: 40vmin;\n  pointer-events: none;\n}\n\n@media (prefers-reduced-motion: no-preference) {\n  .App-logo {\n    animation: App-logo-spin infinite 20s linear;\n  }\n}\n\n.App-header {\n  background-color: #a89773;\n  min-height: 60vh;\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  justify-content: center;\n  font-size: calc(10px + 2vmin);\n  color: white;\n}\n\n.App-link {\n  color: #61dafb;\n}\n.table {\n  background: white;\n}\n\n/*@keyframes App-logo-spin {\n  from {\n    transform: rotate(0deg);\n  }\n  to {\n    transform: rotate(360deg);\n  }\n}\n*/", "",{"version":3,"sources":["webpack://./src/App.css"],"names":[],"mappings":"AAAA;EACE,iBAAiB;EACjB,kBAAkB;EAClB,6CAA6C;EAC7C,uBAAuB;EACvB,oBAAoB;AACtB;;AAEA;EACE,cAAc;EACd,oBAAoB;AACtB;;AAEA;EACE;IACE,4CAA4C;EAC9C;AACF;;AAEA;EACE,yBAAyB;EACzB,gBAAgB;EAChB,aAAa;EACb,sBAAsB;EACtB,mBAAmB;EACnB,uBAAuB;EACvB,6BAA6B;EAC7B,YAAY;AACd;;AAEA;EACE,cAAc;AAChB;AACA;EACE,iBAAiB;AACnB;;AAEA;;;;;;;;CAQC","sourcesContent":[".App {\n  padding-top: 10vh;\n  text-align: center;\n  font-family: \"poynter-oldstyle-display\",serif;\n  background-color: wheat;\n  padding-bottom: 10vh;\n}\n\n.App-logo {\n  height: 40vmin;\n  pointer-events: none;\n}\n\n@media (prefers-reduced-motion: no-preference) {\n  .App-logo {\n    animation: App-logo-spin infinite 20s linear;\n  }\n}\n\n.App-header {\n  background-color: #a89773;\n  min-height: 60vh;\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  justify-content: center;\n  font-size: calc(10px + 2vmin);\n  color: white;\n}\n\n.App-link {\n  color: #61dafb;\n}\n.table {\n  background: white;\n}\n\n/*@keyframes App-logo-spin {\n  from {\n    transform: rotate(0deg);\n  }\n  to {\n    transform: rotate(360deg);\n  }\n}\n*/"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -2764,7 +2809,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_cssWithMappingToString_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "body {\r\n  margin: 0;\r\n  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',\r\n    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',\r\n    sans-serif;\r\n  -webkit-font-smoothing: antialiased;\r\n  -moz-osx-font-smoothing: grayscale;\r\n}\r\n\r\ncode {\r\n  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',\r\n    monospace;\r\n}\r\n", "",{"version":3,"sources":["webpack://./src/index.css"],"names":[],"mappings":"AAAA;EACE,SAAS;EACT;;cAEY;EACZ,mCAAmC;EACnC,kCAAkC;AACpC;;AAEA;EACE;aACW;AACb","sourcesContent":["body {\r\n  margin: 0;\r\n  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',\r\n    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',\r\n    sans-serif;\r\n  -webkit-font-smoothing: antialiased;\r\n  -moz-osx-font-smoothing: grayscale;\r\n}\r\n\r\ncode {\r\n  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',\r\n    monospace;\r\n}\r\n"],"sourceRoot":""}]);
+___CSS_LOADER_EXPORT___.push([module.id, "body {\n  margin: 0;\n  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',\n    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',\n    sans-serif;\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale;\n}\n\ncode {\n  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',\n    monospace;\n}\n", "",{"version":3,"sources":["webpack://./src/index.css"],"names":[],"mappings":"AAAA;EACE,SAAS;EACT;;cAEY;EACZ,mCAAmC;EACnC,kCAAkC;AACpC;;AAEA;EACE;aACW;AACb","sourcesContent":["body {\n  margin: 0;\n  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',\n    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',\n    sans-serif;\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale;\n}\n\ncode {\n  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',\n    monospace;\n}\n"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -33113,7 +33158,7 @@ module.exports = styleTagTransform;
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
-module.exports = __webpack_require__.p + "8dd310d7549dc6284fd8.svg";
+module.exports = __webpack_require__.p + "39062f51cfa46c94eb81.svg";
 
 /***/ })
 

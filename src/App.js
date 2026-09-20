@@ -71,7 +71,9 @@ class App extends Component {
  componentDidMount() { 
         
     //Get current Bread Data
-    axios.get('https://trevor-sutherland.github.io/bread-convert/public/breadRecipes.json')
+    // Load from a relative path so local builds and GitHub Pages both use
+    // the recipe JSON shipped with this app (with correct time units).
+    axios.get('breadRecipes.json')
     .then((response) => {
           this.setState({
           bread: response.data
