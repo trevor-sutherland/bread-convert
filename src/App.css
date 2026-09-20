@@ -35,6 +35,30 @@
   background: white;
 }
 
+.project-list,
+.project-editor {
+  background: rgba(255, 255, 255, 0.72);
+  border: 1px solid rgba(120, 96, 60, 0.25);
+  border-radius: 0.35rem;
+  padding: 1rem 1.1rem;
+}
+
+.project-list .list-group-item.active {
+  background-color: #a89773;
+  border-color: #a89773;
+}
+
+.project-editor .form-control,
+.project-editor .form-select,
+.App .form-control,
+.App .form-select {
+  background-color: #fffef8;
+}
+
+.App .container {
+  max-width: 1140px;
+}
+
 /*@keyframes App-logo-spin {
   from {
     transform: rotate(0deg);

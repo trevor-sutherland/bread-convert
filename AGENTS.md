@@ -13,28 +13,32 @@ There is no backend, database, or auth. All data is static JSON plus two HTTP ca
 ```
 src/
   index.js                 React mount
-  App.js                   State, recipe fetch, Unsplash, flour input
+  App.js                   State, recipe fetch, Unsplash, flour, projects
   App.css / index.css
+  projectStorage.js        localStorage load/save + export/import
+  scaleIngredients.js      Baker’s % → grams helper
   Control/
     BreadSelect.js         Dropdown options from recipe list
     Flour.js               Flour weight number input
-    BreadIngredients.js    Scaled ingredient list
-    Bread.js               Second copy of the scaled list (title + amounts)
+    BreadIngredients.js    Scaled ingredient list (formula)
     BreadPreperation.js    Autolyse / bulk / proof / bake table
+    ProjectList.js         Saved bake list + export/import
+    ProjectEditor.js       Title, notes, editable actuals
     Yeast.js / Leaven.js   Yeast vs leaven row
 public/
   breadRecipes.json        Recipe catalog (percentages + prep)
-  index.html               HtmlWebpackPlugin template (Bootstrap 5 CDN)
+  index.template.html      HtmlWebpackPlugin template (Bootstrap 5 CDN)
 webpack.config.js          Entry, Babel, CSS, copy recipes into dist/
-.github/workflows/webpack.yml   npm install + webpack on master
+.github/workflows/         webpack CI + deploy-pages on master
 ```
 
 `package.json` scripts:
 
 | Script | Command | Purpose |
 | --- | --- | --- |
-| `npm start` | `webpack serve` | Dev server (default **http://localhost:8080**) |
-| `npm run pack` | `webpack` | Production-ish bundle to `dist/bundle.js` |
+| `npm start` | `webpack serve` | Dev server (default **http://localhost:3000**) |
+| `npm run pack` | `webpack` | Bundle to `dist/bundle.js` |
+| `npm run build:pages` | pages webpack + sync | Build for GitHub Pages |
 
 There is no `npm test` or `npm run build`. The README that used to describe Create React App is outdated; this project is webpack + Babel, not CRA.
 
@@ -90,7 +94,7 @@ Scaling: `Math.round((percent / 100) * flour)`. Flour state is initialized as `[
 
 ## Feature work
 
-A planned bake journal (named bread projects, notes, saved flour/salt/leaven amounts) is described in [FEATURE_UPGRADE.md](FEATURE_UPGRADE.md). Implement that only when requested; do not add persistence by default.
+The bake journal (named bread projects, notes, saved flour/salt/leaven amounts) is implemented with localStorage — see [FEATURE_UPGRADE.md](FEATURE_UPGRADE.md). Key modules: `src/projectStorage.js`, `src/scaleIngredients.js`, `src/Control/ProjectList.js`, `src/Control/ProjectEditor.js`. Do not add a server or remote DB unless asked.
 
 ## Pitfalls
 

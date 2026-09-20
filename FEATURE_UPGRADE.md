@@ -65,9 +65,9 @@ Example payload:
 
 ## Persistence (keep it small)
 
-There is no server. Start with **localStorage** (or IndexedDB if photos come later). Export/import JSON would make backups and sharing possible without a backend.
+**Implemented:** projects persist in the browser via **localStorage** (`breadConvert.projects`). Export/import JSON backs up and restores the journal without a backend. (IndexedDB can wait until photos are added.)
 
-A later step could write into `breadRecipes.json`-shaped files, but projects are *bakes*, not catalog formulas — keep those two lists separate.
+Projects are *bakes*, not catalog formulas — keep those two lists separate from `breadRecipes.json`.
 
 ## How this fits the current code
 
@@ -81,6 +81,11 @@ A later step could write into `breadRecipes.json`-shaped files, but projects are
 - Inventory of flour bags
 - Automatic conversion from volume (cups)
 - Editing the shared GitHub Pages recipe catalog from the journal
+- Photos, star ratings, or “would bake again” (optional later)
+
+## Status
+
+Shipped in the app UI: **Bread projects** list, **Save / Update / Delete**, editable **actual amounts**, **notes**, hydration hint, and **Export / Import** JSON. Data stays on the device (localStorage).
 
 ## Success
 
