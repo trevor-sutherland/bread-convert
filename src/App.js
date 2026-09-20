@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
 import axios from 'axios';
-import Bread from './Control/Bread';
 import BreadSelect from './Control/BreadSelect';
 import Flour from './Control/Flour';
 import Breadingredients from './Control/BreadIngredients';
@@ -109,7 +107,6 @@ class App extends Component {
             <div className="col">
                 <Breadingredients ingredients={this.state.ingredients} recipe={this.state.recipe} flour={this.state.flour} />
             </div>
-                <Bread ingredients={this.state.ingredients} recipe={this.state.recipe} flour={this.state.flour} />
           </div>
           <div className="row">  
             <div className="col">
