@@ -303,11 +303,17 @@ class App extends Component {
 
     return (
       <div className="App">
-        <header className="App-header">
-          <h1>For Bread Baking</h1>
-          {this.state.breadLogo ? (
-            <img src={this.state.breadLogo} className="App-logo" alt="Fresh bread" />
-          ) : null}
+        <header
+          className="App-header"
+          style={{
+            height: '100vh',
+            minHeight: '100vh',
+            ...(this.state.breadLogo
+              ? { backgroundImage: `url(${this.state.breadLogo})` }
+              : {}),
+          }}
+        >
+          <h1 className="App-title">For Bread Baking</h1>
         </header>
         <div className="container">
           <div className="row g-4 text-start">
