@@ -86,14 +86,14 @@ class App extends Component {
 
     return (
       <div className="App">
-        <header className="App-header">
-          {this.state.breadLogo ? (
-            <img
-              src={this.state.breadLogo}
-              className="App-hero-image"
-              alt=""
-            />
-          ) : null}
+        <header
+          className="App-header"
+          style={
+            this.state.breadLogo
+              ? { backgroundImage: `url(${this.state.breadLogo})` }
+              : undefined
+          }
+        >
           <h1 className="App-title">For Bread Baking</h1>
         </header>
         <div className="container">
