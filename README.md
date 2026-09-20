@@ -1,68 +1,40 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Bread Convert
 
-## Available Scripts
+A baker’s-percentage calculator for scaling bread recipes. Pick a loaf, set a flour weight, and the app converts each ingredient (white flour, whole wheat, water, salt, yeast or leaven) into grams. It also shows preparation times and temperatures for autolyse, bulk fermentation, proof, and bake.
 
-In the project directory, you can run:
+Recipes live in `public/breadRecipes.json` (Ken Forkish wheat bread, Tartine country loaf, focaccia, Joshua Weissman milk bread). The UI is a small React 17 app bundled with webpack.
 
-### `npm start`
+## Run locally
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+```bash
+npm install
+npm start
+```
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+Then open [http://localhost:8080](http://localhost:8080). Webpack Dev Server reloads on save.
 
-### `npm test`
+To write a production bundle to `dist/`:
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+```bash
+npm run pack
+```
 
-### `npm run build`
+Node 16+ is a safe local target (CI still lists 12/14/16).
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## How it works
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+1. On load, `src/App.js` fetches the recipe list and a random bread photo from Unsplash.
+2. Choosing a bread sets `recipe` in App state.
+3. Changing the flour input scales every baker’s percentage against that flour weight.
+4. `BreadIngredients`, `Bread`, and `BreadPreperation` render scaled amounts and the schedule.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Ingredient math is `percentage / 100 * flour`, rounded to a whole gram.
 
-### `npm run eject`
+## Possible upgrades
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+1. **Bake journal (bread projects)** — Save a named bake with notes and the actual amounts of flour, salt, leaven/yeast, and water you used. See [FEATURE_UPGRADE.md](FEATURE_UPGRADE.md).
+2. **Load recipes from the local JSON file** — The app currently requests `breadRecipes.json` from GitHub Pages. Serving the copied file from webpack (already copied into `dist/`) would work offline and make local recipe edits show up immediately.
+3. **Units and hydration** — Toggle grams vs ounces, and show dough hydration and total dough weight alongside the ingredient list. Milk bread extras (tangzhong, milk, butter, sugar, eggs) are in the JSON but not rendered yet.
+4. **Prep timers** — Turn the autolyse / bulk / proof / bake table into startable timers with alerts so you can follow a bake without watching the clock.
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+More context for contributors and agents is in [AGENTS.md](AGENTS.md).
