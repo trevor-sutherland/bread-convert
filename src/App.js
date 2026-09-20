@@ -87,8 +87,14 @@ class App extends Component {
     return (
       <div className="App">
         <header className="App-header">
-          <h1>For Bread Baking</h1>
-          <img src={this.state.breadLogo} className="App-logo" alt="logo" />
+          {this.state.breadLogo ? (
+            <img
+              src={this.state.breadLogo}
+              className="App-hero-image"
+              alt=""
+            />
+          ) : null}
+          <h1 className="App-title">For Bread Baking</h1>
         </header>
         <div className="container">
           <div className="row">
