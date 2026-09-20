@@ -71,9 +71,8 @@ class App extends Component {
  componentDidMount() { 
         
     //Get current Bread Data
-    // Load from a relative path so local builds and GitHub Pages both use
-    // the recipe JSON shipped with this app (with correct time units).
-    axios.get('breadRecipes.json')
+    // PUBLIC_URL is set by webpack ('' locally, '/bread-convert' on GitHub Pages).
+    axios.get(`${process.env.PUBLIC_URL}/breadRecipes.json`)
     .then((response) => {
           this.setState({
           bread: response.data
