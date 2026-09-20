@@ -5,9 +5,9 @@
   "homepage": "https://trevor-sutherland.github.io/bread-convert",
   "main": "src/index.js",
   "scripts": {
-    "start": "NODE_OPTIONS=--openssl-legacy-provider webpack serve",
-    "pack": "NODE_OPTIONS=--openssl-legacy-provider webpack",
-    "build:pages": "GITHUB_PAGES=true NODE_OPTIONS=--openssl-legacy-provider webpack && node scripts/sync-pages.js"
+    "start": "node scripts/run-webpack.js serve",
+    "pack": "node scripts/run-webpack.js",
+    "build:pages": "GITHUB_PAGES=true node scripts/run-webpack.js && node scripts/sync-pages.js"
   },
   "babel": {
     "presets": [

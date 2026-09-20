@@ -29,7 +29,6 @@ jobs:
 
       - name: Install and build
         env:
-          NODE_OPTIONS: --openssl-legacy-provider
           GITHUB_PAGES: 'true'
         run: |
           npm ci
