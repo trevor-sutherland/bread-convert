@@ -88,11 +88,13 @@ class App extends Component {
       <div className="App">
         <header
           className="App-header"
-          style={
-            this.state.breadLogo
+          style={{
+            height: '100vh',
+            minHeight: '100vh',
+            ...(this.state.breadLogo
               ? { backgroundImage: `url(${this.state.breadLogo})` }
-              : undefined
-          }
+              : {}),
+          }}
         >
           <h1 className="App-title">For Bread Baking</h1>
         </header>
