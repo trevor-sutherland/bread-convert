@@ -23,18 +23,21 @@ Node 16+ is a safe local target (CI still lists 12/14/16).
 
 ## How it works
 
-1. On load, `src/App.js` fetches the recipe list and a random bread photo from Unsplash.
-2. Choosing a bread sets `recipe` in App state.
+1. On load, `src/App.js` fetches the recipe list and a random bread photo from Unsplash, and loads any saved projects from localStorage.
+2. Choosing a bread sets `recipe` in App state and seeds editable actual gram amounts.
 3. Changing the flour input scales every baker’s percentage against that flour weight.
-4. `BreadIngredients`, `Bread`, and `BreadPreperation` render scaled amounts and the schedule.
+4. `BreadIngredients` and `BreadPreperation` render scaled amounts and the schedule; the project editor saves actuals + notes.
 
-Ingredient math is `percentage / 100 * flour`, rounded to a whole gram.
+Ingredient math is `percentage / 100 * flour`, rounded to a whole gram (`src/scaleIngredients.js`).
+
+## Bake journal
+
+Save a named **bread project** with notes and the actual grams you mixed (flour, water, salt, leaven/yeast, and milk-bread extras when present). Projects live in **localStorage** on this device; use Export / Import JSON to back them up. Details: [FEATURE_UPGRADE.md](FEATURE_UPGRADE.md).
 
 ## Possible upgrades
 
-1. **Bake journal (bread projects)** — Save a named bake with notes and the actual amounts of flour, salt, leaven/yeast, and water you used. See [FEATURE_UPGRADE.md](FEATURE_UPGRADE.md).
-2. **Load recipes from the local JSON file** — The app currently requests `breadRecipes.json` from GitHub Pages. Serving the copied file from webpack (already copied into `dist/`) would work offline and make local recipe edits show up immediately.
-3. **Units and hydration** — Toggle grams vs ounces, and show dough hydration and total dough weight alongside the ingredient list. Milk bread extras (tangzhong, milk, butter, sugar, eggs) are in the JSON but not rendered yet.
-4. **Prep timers** — Turn the autolyse / bulk / proof / bake table into startable timers with alerts so you can follow a bake without watching the clock.
+1. **Units** — Toggle grams vs ounces, and show total dough weight alongside hydration (hydration is already shown on the project form).
+2. **Prep timers** — Turn the autolyse / bulk / proof / bake table into startable timers with alerts so you can follow a bake without watching the clock.
+3. **Project photos / ratings** — Optional later additions called out in the feature upgrade doc.
 
 More context for contributors and agents is in [AGENTS.md](AGENTS.md).

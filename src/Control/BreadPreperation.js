@@ -55,8 +55,8 @@ class BreadPreperation extends Component {
         
 		return(
             <div className="list-group">
-                <table class="table table-striped">
-                    <thead class="thead-dark">
+                <table className="table table-striped">
+                    <thead className="thead-dark">
                         <tr>
                         <th scope="col">Type</th>
                         <th scope="col">Time</th>
