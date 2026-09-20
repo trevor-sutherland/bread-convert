@@ -12,22 +12,25 @@
         },
         "preperation": {
             "autolyse": {
-                "time": 20, 
+                "time": 20,
+                "unit": "minutes",
                 "temperature": 74
             },
             "bulkFermentation": {
-                "time": 5, 
+                "time": 5,
+                "unit": "hours",
                 "temperature": 74
             },
             "proof": {
-                "time": 12, 
+                "time": 12,
+                "unit": "hours",
                 "temperature": 45
             },
             "bake": {
-                "time": 60, 
+                "time": 60,
+                "unit": "minutes",
                 "temperature": 475
-            },
-            "total": 18
+            }
         }   
     },
     {
@@ -43,22 +46,25 @@
         },
         "preperation": {
             "autolyse": {
-                "time": 20, 
+                "time": 20,
+                "unit": "minutes",
                 "temperature": 74
             },
             "bulkFermentation": {
-                "time": 5, 
+                "time": 5,
+                "unit": "hours",
                 "temperature": 74
             },
             "proof": {
-                "time": 90, 
+                "time": 90,
+                "unit": "minutes",
                 "temperature": 74
             },
             "bake": {
-                "time": 60, 
+                "time": 60,
+                "unit": "minutes",
                 "temperature": 475
-            },
-            "total": 8
+            }
         }   
     },
     {
@@ -74,22 +80,25 @@
         },
         "preperation": {
             "autolyse": {
-                "time": 30, 
+                "time": 30,
+                "unit": "minutes",
                 "temperature": 74
             },
             "bulkFermentation": {
-                "time": 5, 
+                "time": 5,
+                "unit": "hours",
                 "temperature": 74
             },
             "proof": {
-                "time": "", 
+                "time": "",
+                "unit": "hours",
                 "temperature": ""
             },
             "bake": {
-                "time": 22, 
+                "time": 22,
+                "unit": "minutes",
                 "temperature": 450
-            },
-            "total": 6
+            }
         }   
     },
     {
@@ -114,22 +123,25 @@
         },
         "preperation": {
             "autolyse": {
-                "time": "", 
+                "time": "",
+                "unit": "minutes",
                 "temperature": ""
             },
             "bulkFermentation": {
-                "time": 1, 
+                "time": 1,
+                "unit": "hours",
                 "temperature": 74
             },
             "proof": {
-                "time": 1, 
+                "time": 1,
+                "unit": "hours",
                 "temperature": 74
             },
             "bake": {
-                "time": 30, 
+                "time": 30,
+                "unit": "minutes",
                 "temperature": 350
-            },
-            "total": 2.5
+            }
         }   
     }
 ]
