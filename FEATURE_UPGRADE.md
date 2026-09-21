@@ -61,11 +61,11 @@ Example payload:
 - **Notes** textarea on the project, saved with the numbers, not a separate app.
 - **Actuals** as editable gram fields next to the calculated list so you can log what went in the bowl.
 - **Project list** (sidebar or a simple page): title, date, recipe name; click to restore amounts and notes.
-- Optional later: photo, rating, or a checkbox for “would bake again.”
+- Optional later: rating, or a checkbox for “would bake again.”
 
 ## Persistence (keep it small)
 
-**Implemented:** projects persist in the browser via **localStorage** (`breadConvert.projects`). Export/import JSON backs up and restores the journal without a backend. (IndexedDB can wait until photos are added.)
+**Implemented:** projects persist in the browser via **localStorage** (`breadConvert.projects`), including an optional **photo** (JPEG data URL, resized client-side before save). Export/import JSON backs up and restores the journal without a backend.
 
 Projects are *bakes*, not catalog formulas — keep those two lists separate from `breadRecipes.json`.
 
@@ -81,11 +81,11 @@ Projects are *bakes*, not catalog formulas — keep those two lists separate fro
 - Inventory of flour bags
 - Automatic conversion from volume (cups)
 - Editing the shared GitHub Pages recipe catalog from the journal
-- Photos, star ratings, or “would bake again” (optional later)
+- Star ratings or “would bake again” (optional later)
 
 ## Status
 
-Shipped in the app UI: **Bread projects** list, **Save / Update / Delete**, editable **actual amounts**, **notes**, hydration hint, and **Export / Import** JSON. Data stays on the device (localStorage).
+Shipped in the app UI: **Bread projects** list, **Save / Update / Delete**, editable **actual amounts**, **notes**, optional **photo**, hydration hint, and **Export / Import** JSON. Data stays on the device (localStorage).
 
 ## Success
 

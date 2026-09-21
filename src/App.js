@@ -15,6 +15,7 @@ import {
   exportProjectsJson,
   parseImportedProjects,
 } from './projectStorage';
+import { compressImageFile } from './compressImage';
 
 const emptyActuals = () => ({
   flour: 500,
@@ -37,6 +38,9 @@ class App extends Component {
       activeProjectId: null,
       projectTitle: '',
       notes: '',
+      photo: '',
+      photoBusy: false,
+      photoError: '',
       actuals: emptyActuals(),
     };
     this.handleChange = this.handleChange.bind(this);
@@ -46,6 +50,8 @@ class App extends Component {
     this.handleProjectTitleChange = this.handleProjectTitleChange.bind(this);
     this.handleNotesChange = this.handleNotesChange.bind(this);
     this.handleActualChange = this.handleActualChange.bind(this);
+    this.handlePhotoFile = this.handlePhotoFile.bind(this);
+    this.handleRemovePhoto = this.handleRemovePhoto.bind(this);
     this.handleSaveProject = this.handleSaveProject.bind(this);
     this.handleDeleteProject = this.handleDeleteProject.bind(this);
     this.handleClearProject = this.handleClearProject.bind(this);
@@ -128,6 +134,28 @@ class App extends Component {
     this.setState({ notes: e.target.value });
   }
 
+  handlePhotoFile(e) {
+    const file = e.target.files && e.target.files[0];
+    e.target.value = '';
+    if (!file) return;
+
+    this.setState({ photoBusy: true, photoError: '' });
+    compressImageFile(file)
+      .then((dataUrl) => {
+        this.setState({ photo: dataUrl, photoBusy: false, photoError: '' });
+      })
+      .catch((err) => {
+        this.setState({
+          photoBusy: false,
+          photoError: (err && err.message) || 'Could not add that photo.',
+        });
+      });
+  }
+
+  handleRemovePhoto() {
+    this.setState({ photo: '', photoError: '' });
+  }
+
   handleActualChange(e) {
     const { name, value } = e.target;
     const num = value === '' ? '' : Number(value);
@@ -145,6 +173,7 @@ class App extends Component {
     const {
       projectTitle,
       notes,
+      photo,
       actuals,
       recipe,
       activeProjectId,
@@ -171,6 +200,10 @@ class App extends Component {
       salt: Number(actuals.salt) || 0,
     };
 
+    if (photo) {
+      project.photo = photo;
+    }
+
     if (actuals.leaven !== undefined && actuals.leaven !== '') {
       project.leaven = Number(actuals.leaven) || 0;
     }
@@ -190,11 +223,18 @@ class App extends Component {
       nextProjects = [project, ...projects];
     }
 
-    this.persistProjects(nextProjects);
-    this.setState({
-      activeProjectId: project.id,
-      flour: project.flour,
-    });
+    try {
+      this.persistProjects(nextProjects);
+      this.setState({
+        activeProjectId: project.id,
+        flour: project.flour,
+        photoError: '',
+      });
+    } catch (err) {
+      this.setState({
+        photoError: (err && err.message) || 'Could not save this project.',
+      });
+    }
   }
 
   handleDeleteProject() {
@@ -215,6 +255,8 @@ class App extends Component {
         ? `${recipe.title.replace(/\s*\([^)]*\)\s*$/, '')} bake`
         : '',
       notes: '',
+      photo: '',
+      photoError: '',
       actuals: recipe ? this.seedActualsFromRecipe(recipe, flour) : emptyActuals(),
     });
   }
@@ -246,6 +288,8 @@ class App extends Component {
       activeProjectId: project.id,
       projectTitle: project.title,
       notes: project.notes || '',
+      photo: project.photo || '',
+      photoError: '',
       flour: project.flour,
       selectedBreadTitle: project.sourceRecipeTitle || '',
       recipe: recipe,
@@ -276,7 +320,10 @@ class App extends Component {
         const merged = Object.values(byId);
         this.persistProjects(merged);
       } catch (err) {
-        window.alert('Could not import projects. Use a JSON export from this app.');
+        window.alert(
+          (err && err.message) ||
+            'Could not import projects. Use a JSON export from this app.'
+        );
       }
     };
     reader.readAsText(file);
@@ -344,6 +391,9 @@ class App extends Component {
               <ProjectEditor
                 projectTitle={this.state.projectTitle}
                 notes={this.state.notes}
+                photo={this.state.photo}
+                photoBusy={this.state.photoBusy}
+                photoError={this.state.photoError}
                 actuals={this.state.actuals}
                 formulaActuals={formulaActuals}
                 sourceRecipeTitle={recipe && recipe.title}
@@ -351,6 +401,8 @@ class App extends Component {
                 onTitleChange={this.handleProjectTitleChange}
                 onNotesChange={this.handleNotesChange}
                 onActualChange={this.handleActualChange}
+                onPhotoFile={this.handlePhotoFile}
+                onRemovePhoto={this.handleRemovePhoto}
                 onSave={this.handleSaveProject}
                 onDelete={this.handleDeleteProject}
                 onClear={this.handleClearProject}

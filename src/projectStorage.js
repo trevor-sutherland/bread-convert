@@ -16,7 +16,18 @@ export function loadProjects() {
 
 export function saveProjects(projects) {
   if (typeof localStorage === 'undefined') return;
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(projects));
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(projects));
+  } catch (err) {
+    const quota =
+      err && (err.name === 'QuotaExceededError' || err.code === 22);
+    if (quota) {
+      throw new Error(
+        'Browser storage is full. Remove a photo or export and delete older projects.'
+      );
+    }
+    throw err;
+  }
 }
 
 export function createProjectId() {
