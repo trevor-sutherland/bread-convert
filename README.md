@@ -32,7 +32,7 @@ Ingredient math is `percentage / 100 * flour`, rounded to a whole gram (`src/sca
 
 ## Bake journal
 
-Save a named **bread project** with notes and the actual grams you mixed (flour, water, salt, leaven/yeast, and milk-bread extras when present). Projects live in **localStorage** on this device; use Export / Import JSON to back them up. Details: [FEATURE_UPGRADE.md](FEATURE_UPGRADE.md).
+Save a named **bread project** with notes, an optional photo, and the actual grams you mixed (flour, water, salt, leaven/yeast, and milk-bread extras when present). Projects live in **localStorage** on this device; use Export / Import JSON to back them up. Details: [FEATURE_UPGRADE.md](FEATURE_UPGRADE.md).
 
 ## Possible upgrades
 

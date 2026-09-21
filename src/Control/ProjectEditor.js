@@ -20,6 +20,9 @@ class ProjectEditor extends Component {
     const {
       projectTitle,
       notes,
+      photo,
+      photoBusy,
+      photoError,
       actuals,
       formulaActuals,
       sourceRecipeTitle,
@@ -27,6 +30,8 @@ class ProjectEditor extends Component {
       onTitleChange,
       onNotesChange,
       onActualChange,
+      onPhotoFile,
+      onRemovePhoto,
       onSave,
       onDelete,
       onClear,
@@ -121,6 +126,45 @@ class ProjectEditor extends Component {
             value={notes}
             onChange={onNotesChange}
           />
+        </div>
+
+        <div className="mb-3">
+          <label className="form-label" htmlFor="projectPhoto">
+            Photo
+          </label>
+          <p className="form-text mt-0 mb-2">
+            Optional crumb or loaf shot for this bake. Compressed and saved with the project on
+            this device.
+          </p>
+          {photo ? (
+            <div className="project-photo-preview mb-2">
+              <img src={photo} alt="Bake photo for notes" />
+            </div>
+          ) : null}
+          <div className="d-flex flex-wrap gap-2 align-items-center">
+            <label className={`btn btn-sm btn-outline-secondary mb-0 ${photoBusy ? 'disabled' : ''}`}>
+              {photoBusy ? 'Processing…' : photo ? 'Replace photo' : 'Upload photo'}
+              <input
+                id="projectPhoto"
+                type="file"
+                accept="image/*"
+                className="d-none"
+                disabled={photoBusy}
+                onChange={onPhotoFile}
+              />
+            </label>
+            {photo ? (
+              <button
+                type="button"
+                className="btn btn-sm btn-outline-danger"
+                onClick={onRemovePhoto}
+                disabled={photoBusy}
+              >
+                Remove photo
+              </button>
+            ) : null}
+          </div>
+          {photoError ? <div className="text-danger small mt-2">{photoError}</div> : null}
         </div>
 
         <div className="d-flex flex-wrap gap-2">

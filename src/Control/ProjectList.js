@@ -55,11 +55,22 @@ class ProjectList extends Component {
                     }
                   }}
                 >
-                  <div className="fw-bold">{project.title || 'Untitled bake'}</div>
-                  <small className={isActive ? '' : 'text-muted'}>
-                    {dateLabel}
-                    {project.sourceRecipeTitle ? ` · ${project.sourceRecipeTitle}` : ''}
-                  </small>
+                  <div className="d-flex gap-2 align-items-start">
+                    {project.photo ? (
+                      <img
+                        className="project-list-thumb"
+                        src={project.photo}
+                        alt=""
+                      />
+                    ) : null}
+                    <div className="flex-grow-1 min-w-0">
+                      <div className="fw-bold">{project.title || 'Untitled bake'}</div>
+                      <small className={isActive ? '' : 'text-muted'}>
+                        {dateLabel}
+                        {project.sourceRecipeTitle ? ` · ${project.sourceRecipeTitle}` : ''}
+                      </small>
+                    </div>
+                  </div>
                 </li>
               );
             })}
